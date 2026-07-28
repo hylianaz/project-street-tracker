@@ -26,6 +26,10 @@ const bot = new TelegramBot(TOKEN, {
   polling: true
 });
 
+function esAdmin(msg) {
+  return String(msg.from.id) === String(ADMIN_ID);
+}
+
 bot.onText(/\/start/, (msg) => {
   bot.sendMessage(
     msg.chat.id,
