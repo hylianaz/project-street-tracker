@@ -43,16 +43,17 @@ console.log("Bot iniciado");
 
 let vigilados = [];
 
-bot.onText(/\/vigilar (.+)/, (msg, match) => {
+bot.onText(/\/vigilar (.+)/, async (msg, match) => {
   const jugador = match[1];
 
-  if (!vigilados.includes(jugador)) {
-    vigilados.push(jugador);
-  }
+  await pool.query(
+    "INSERT INTO vigilados (jugador) VALUES ($1) ON CONFLICT DO NOTHING",
+    [jugador]
+  );
 
   bot.sendMessage(
     msg.chat.id,
-    `👁️ Vigilando:\n\n${jugador}`
+    `👁️ Guardado en vigilancia:\n\n${jugador}`
   );
 });
 
