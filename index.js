@@ -30,14 +30,28 @@ function esAdmin(msg) {
   return String(msg.from.id) === String(ADMIN_ID);
 }
 
-bot.onText(/\/start/, (msg) => {
+bot.onText(/\/start (.+)/, async (msg, match) => {
+
+  if (!esAdmin(msg)) {
+    return bot.sendMessage(
+      msg.chat.id,
+      "❌ No tienes permiso para usar este bot."
+    );
+  }
   bot.sendMessage(
     msg.chat.id,
     "🤖 Project Street Tracker iniciado.\n\nUsa /estado para comprobar el bot."
   );
 });
 
-bot.onText(/\/estado/, (msg) => {
+bot.onText(/\/estado (.+)/, async (msg, match) => {
+
+  if (!esAdmin(msg)) {
+    return bot.sendMessage(
+      msg.chat.id,
+      "❌ No tienes permiso para usar este bot."
+    );
+  }
   bot.sendMessage(
     msg.chat.id,
     "🟢 Bot funcionando correctamente.\n\nPróximo paso: conectar Project Street."
