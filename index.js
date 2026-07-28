@@ -57,8 +57,12 @@ bot.onText(/\/vigilar (.+)/, async (msg, match) => {
   );
 });
 
-bot.onText(/\/lista/, (msg) => {
-  if (vigilados.length === 0) {
+bot.onText(/\/lista/, async (msg) => {
+  const resultado = await pool.query(
+    "SELECT jugador FROM vigilados"
+  );
+
+  if (resultado.rows.length === 0) {
     bot.sendMessage(
       msg.chat.id,
       "No hay jugadores vigilados."
@@ -66,9 +70,12 @@ bot.onText(/\/lista/, (msg) => {
     return;
   }
 
+  const lista = resultado.rows
+    .map(x => "• " + x.jugador)
+    .join("\n");
+
   bot.sendMessage(
     msg.chat.id,
-    "👁️ Jugadores vigilados:\n\n" +
-    vigilados.join("\n")
+    "👁️ Jugadores vigilados:\n\n" + lista
   );
 });
