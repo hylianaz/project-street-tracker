@@ -26,3 +26,12 @@ bot.onText(/\/estado/, (msg) => {
 });
 
 console.log("Bot iniciado");
+
+bot.onText(/\/vigilar (.+)/, (msg, match) => {
+  const jugador = match[1];
+
+  bot.sendMessage(
+    msg.chat.id,
+    `👁️ Añadido a vigilancia:\n\n${jugador}\n\nCuando tengamos conectado el monitor recibirás avisos.`
+  );
+});
