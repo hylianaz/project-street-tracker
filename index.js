@@ -27,11 +27,33 @@ bot.onText(/\/estado/, (msg) => {
 
 console.log("Bot iniciado");
 
+let vigilados = [];
+
 bot.onText(/\/vigilar (.+)/, (msg, match) => {
   const jugador = match[1];
 
+  if (!vigilados.includes(jugador)) {
+    vigilados.push(jugador);
+  }
+
   bot.sendMessage(
     msg.chat.id,
-    `👁️ Añadido a vigilancia:\n\n${jugador}\n\nCuando tengamos conectado el monitor recibirás avisos.`
+    `👁️ Vigilando:\n\n${jugador}`
+  );
+});
+
+bot.onText(/\/lista/, (msg) => {
+  if (vigilados.length === 0) {
+    bot.sendMessage(
+      msg.chat.id,
+      "No hay jugadores vigilados."
+    );
+    return;
+  }
+
+  bot.sendMessage(
+    msg.chat.id,
+    "👁️ Jugadores vigilados:\n\n" +
+    vigilados.join("\n")
   );
 });
