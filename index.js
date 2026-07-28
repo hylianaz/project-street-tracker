@@ -1,5 +1,11 @@
 const TelegramBot = require("node-telegram-bot-api");
 
+const { Pool } = require("pg");
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
 const TOKEN = process.env.TELEGRAM_TOKEN;
 
 if (!TOKEN) {
