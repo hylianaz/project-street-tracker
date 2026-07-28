@@ -21,6 +21,7 @@ if (!TOKEN) {
   process.exit(1);
 }
 
+const ADMIN_ID = process.env.ADMIN_ID;
 const bot = new TelegramBot(TOKEN, {
   polling: true
 });
