@@ -68,7 +68,14 @@ bot.onText(/\/vigilar (.+)/, async (msg, match) => {
   );
 });
 
-bot.onText(/\/lista/, async (msg) => {
+bot.onText(/\/lista (.+)/, async (msg, match) => {
+
+  if (!esAdmin(msg)) {
+    return bot.sendMessage(
+      msg.chat.id,
+      "❌ No tienes permiso para usar este bot."
+    );
+  }
   const resultado = await pool.query(
     "SELECT jugador FROM vigilados"
   );
