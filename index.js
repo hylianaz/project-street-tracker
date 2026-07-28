@@ -49,7 +49,13 @@ console.log("Bot iniciado");
 let vigilados = [];
 
 bot.onText(/\/vigilar (.+)/, async (msg, match) => {
-  const jugador = match[1];
+
+  if (!esAdmin(msg)) {
+    return bot.sendMessage(
+      msg.chat.id,
+      "❌ No tienes permiso para usar este bot."
+    );
+  }
 
   await pool.query(
     "INSERT INTO vigilados (jugador) VALUES ($1) ON CONFLICT DO NOTHING",
