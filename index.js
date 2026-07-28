@@ -6,6 +6,14 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
+pool.query(`
+CREATE TABLE IF NOT EXISTS vigilados (
+  id SERIAL PRIMARY KEY,
+  jugador TEXT UNIQUE,
+  fecha TIMESTAMP DEFAULT NOW()
+)
+`);
+
 const TOKEN = process.env.TELEGRAM_TOKEN;
 
 if (!TOKEN) {
